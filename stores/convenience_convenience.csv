@@ -1,0 +1,89 @@
+id,name,description,is_active,is_free,parent
+1,Nhà vệ sinh,test,1,1,37
+2,Bồn tắm hoặc Vòi sen,test,1,1,37
+3,Khăn tắm,test,1,1,37
+4,Ra trải giường,advadv,1,1,36
+5,Ổ điện gần giường ,test,1,1,39
+6,Sản phẩm lau rửa,test,1,1,34
+7,Không gây dị ứng Sàn lát gạch/đá cẩm thạch,test,1,1,39
+8,Bàn làm việc,test,1,1,52
+9,Khu vực tiếp khách,test,1,1,52
+10,Bàn ủi li quần,test,1,1,39
+11,Tủ lạnh,test,1,1,34
+12,TV,test,1,1,38
+13,Truyền hình vệ tinh,test,1,1,38
+14,Toilet chung,test,1,1,37
+15,Máy sấy tóc,test,1,1,37
+16,Ổ cắm cho iPod,test,1,1,38
+17,Ấm đun nước điện,test,1,1,34
+18,Bàn ăn,test,1,1,34
+19,Giá treo quần áo,test,1,1,39
+20,Giá phơi quần áo,test,1,1,39
+21,Giấy vệ sinh,test,1,1,37
+22,Máy lọc không khí,test,1,1,39
+23,Dép,test,1,1,37
+24,Quạt máy,test,1,1,39
+25,Toilet phụ,test,1,1,37
+26,Lò vi sóng,test,1,1,34
+29,Điều hòa không khí,test,1,1,39
+30,Phòng tắm riêng,test,1,1,37
+31,TV màn hình phẳng,test,1,1,38
+32,Hệ thống cách âm,test,1,1,39
+33,WiFi miễn phí,test,1,1,
+34,Nhà bếp,test,1,1,
+35,Chỗ đậu xe,test,1,1,
+36,Phòng ngủ,test,1,1,
+37,Phòng tắm,test,1,1,
+38,Truyền thông & Công nghệ,test,1,1,
+39,Tiện ích trong phòng,test,1,1,
+40,Lối vào dành cho người khuyết tật,test,1,1,
+41,Ngoài trời,test,1,1,
+42,Đặc tính tòa nhà,test,1,1,
+43,Dịch vụ lễ tân,test,1,1,
+44,Dịch vụ giải trí và gia đình,test,1,1,
+45,Dịch vụ cho doanh nhân,test,1,1,
+46,Cửa hàng,test,1,1,
+47,Các tiện nghi khác,test,1,1,
+48,An ninh,test,1,1,
+49,Ngôn ngữ được sử dụng,test,1,1,
+50,"Đồ vệ sinh cá nhân miễn phí
+",test,1,1,37
+51,Vòi sen,test,1,1,37
+52,Khu vực phòng khách,test,1,1,
+53,Xe lăn có thể đi đến mọi nơi trong toàn bộ khuôn viên,test,1,1,40
+54,Các tầng trên chỉ lên được bằng cầu thang,test,1,1,40
+55,Các tầng trên đi lên bằng thang máy,test,1,1,40
+56,Bàn ghế ngoài trời,test,1,1,41
+57,Giáp biển,test,1,1,41
+58,Sân thượng / hiên,test,1,1,41
+59,Bãi biển,test,1,1,62
+60,Đi bộ đường dài,test,1,1,62
+61,Sân gôn,test,1,1,62
+62,Hoạt động,test,1,1,
+63,Căn hộ riêng trong tòa nhà,test,1,1,42
+64,Có xuất hóa đơn,test,1,1,43
+65,Nhận/trả phòng riêng,test,1,1,43
+66,Nhận/trả phòng cấp tốc,test,1,1,43
+67,"Lễ tân 24 giờ
+",test,1,1,43
+68,Cửa an toàn cho trẻ nhỏ,test,1,1,44
+69,Fax/photocopy,test,1,1,45
+70,Cửa hàng tạp hóa (trong khuôn viên),test,1,1,46
+71,Hiệu cắt tóc/làm đẹp,test,1,1,46
+72,Khu vực cho phép hút thuốc,test,1,1,47
+73,Dây khẩn cấp trong phòng tắm,test,1,1,47
+74,Bồn rửa mặt thấp hơn,test,1,1,47
+75,Thang máy,test,1,1,47
+76,Bình chữa cháy,test,1,1,48
+77,Hệ thống CCTV bên ngoài chỗ nghỉ,test,1,1,48
+78,Hệ thống CCTV trong khu vực chung,test,1,1,48
+79,Thiết bị báo cháy,test,1,1,48
+80,Bảo vệ 24/7,test,1,1,48
+81,Thiết bị báo carbon monoxide,test,1,1,48
+82,Ổ khóa mở bằng thẻ,test,1,1,48
+83,Tiếng Anh,test,1,1,49
+84,Tiếng Nhật,test,1,1,49
+85,Tiếng Hàn Quốc,test,1,1,49
+86,Tiếng Nga,test,1,1,49
+87,Tiếng Việt,test,1,1,49
+88,Tiếng Trung,test,1,1,49
