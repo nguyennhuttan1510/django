@@ -1,7 +1,7 @@
 import requests
 
 try:
-    room_id = input('Enter room id: ')
+    room_id = input('Enter service id: ')
 
     access_token = input('Enter your access token: ')
 

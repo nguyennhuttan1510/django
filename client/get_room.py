@@ -12,4 +12,4 @@ try:
     print(response)
     print(response.json())
 except:
-    print('Invalid for get room')
+    print('Invalid for get service')

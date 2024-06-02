@@ -6,7 +6,7 @@ from evaluation.models import Evaluation
 # Register your models here.
 class EvaluationAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'title', 'description_satisfied', 'description_unsatisfied', 'reservation', 'points', 'is_active',
+        'id', 'title', 'description_satisfied', 'description_unsatisfied', 'service', 'points', 'is_active',
         'created_at')
 
     def get_queryset(self, request):

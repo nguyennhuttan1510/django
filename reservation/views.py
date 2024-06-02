@@ -11,7 +11,7 @@ from rest_framework.decorators import action
 
 from common.exceptions.model import ResponseBase
 from organization.models import Organization
-from room.models import Room
+from service.models import Service
 from .models import Reservation
 from .permission import ReservationPolicy
 from .serializers import ReservationSerializer, StatusReservation
@@ -61,17 +61,17 @@ class ReservationViewSet(viewsets.ModelViewSet):
                     status=status.HTTP_400_BAD_REQUEST)
 
             # get rooms
-            rooms = Room.objects.filter(pk__in=request.data['rooms'])
+            rooms = Service.objects.filter(pk__in=request.data['rooms'])
 
             # validate rooms have is one organization
             are_rooms_belong_organization = all(room.organization.pk == rooms[0].organization.pk for room in rooms)
             print(f'are_rooms_belong_organization: {are_rooms_belong_organization}')
             if not are_rooms_belong_organization:
                 return Response(
-                    ResponseBase(message='have some room is not belong to organization, please check again').get(),
+                    ResponseBase(message='have some service is not belong to organization, please check again').get(),
                     status=status.HTTP_400_BAD_REQUEST)
 
-            # check room is available
+            # check service is available
             is_exists = Reservation.objects.filter(status__in=[StatusReservation.ORDERED.name], rooms__in=request.data['rooms']).exists()
             print(f'is_exists: {is_exists}')
             if is_exists:

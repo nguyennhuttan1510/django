@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from common.exceptions.model import ResponseBase
 from convenience.models import Convenience
 from convenience.serializers import ConvenienceSerializer
 
@@ -22,6 +23,6 @@ def view_conveniences(request, pk=None):
 
     if items:
         instance = ConvenienceSerializer(items, many=True).data
-        return Response(instance, status=status.HTTP_200_OK)
+        return Response(ResponseBase(data=instance, message='get category success').get(), status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)

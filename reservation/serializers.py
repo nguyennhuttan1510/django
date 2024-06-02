@@ -58,7 +58,7 @@ class ReservationSerializer(serializers.ModelSerializer):
     #     else:
     #         payload = {
     #             'guest': current_user.pk,
-    #             'rooms': request.data.get('room'),
+    #             'rooms': request.data.get('service'),
     #         }
     #     return payload
 
