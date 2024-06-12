@@ -18,7 +18,7 @@ class Reservation(models.Model):
     organization = models.ForeignKey(Organization, related_name='organization', on_delete=models.CASCADE, default=None,
                                      null=True)
     approved_by = models.ForeignKey(User, related_name='approved_by', on_delete=models.CASCADE, default=None, null=True)
-    rooms = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service, related_name='reservations', related_query_name='reservation')
     status = models.CharField(
         choices=[('ORDERED', 'ordered'), ('COMPLETED', 'completed'), ('CLOSE', 'close'), ('PENDING', 'pending'),
                  ('CANCEL', 'cancel')], default='ORDERED', max_length=30)

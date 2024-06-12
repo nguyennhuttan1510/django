@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
+from common.serializers.base_serializer import BaseSerializer
 from evaluation.models import Evaluation
 from reservation.serializers import ReservationSerializer
 
 
-class EvaluationSerializer(serializers.ModelSerializer):
+class EvaluationSerializer(serializers.ModelSerializer, BaseSerializer):
     class Meta:
         model = Evaluation
         fields = '__all__'

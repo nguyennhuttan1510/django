@@ -2,8 +2,6 @@ from django.db import models
 from enum import Enum
 from django.utils import timezone
 
-from organization.models import Organization
-
 
 class TYPE_CONVENIENCE(Enum):
     PRODUCT = 'PR'

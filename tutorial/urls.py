@@ -53,9 +53,9 @@ urlpatterns = [
 
                   path("", include("users.urls"), name="users"),
                   path("", include("reservation.urls"), name="reservations"),
-                  path("", include("service.urls"), name="rooms"),
-                  path("", include("authentication.urls"), name="authentication"),
-                  path("organizations/", include("organization.urls")),
+                  path("", include("service.urls"), name="services"),
+                  path("", include("authentication.urls"), name="authentications"),
+                  path("", include("organization.urls"), name="organizations"),
                   path("conveniences/", include("convenience.urls")),
                   path("", include("asset.urls")),
                   path("", include("evaluation.urls")),

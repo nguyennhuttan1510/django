@@ -16,8 +16,8 @@ class Service(models.Model):
     description = models.TextField(max_length=300)
     capacity = models.IntegerField()
     price = models.DecimalField(max_digits=20, decimal_places=2)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='organization_room',
-                                     default=None, null=True)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE,
+                                     default=None, null=True, related_name='services')
     conveniences = models.ManyToManyField(Convenience)
     rate = models.DecimalField(default=0, max_digits=5, decimal_places=1)
     promotions = models.ManyToManyField(Promotion)
@@ -48,5 +48,4 @@ def evaluation_calc(evaluations: list) -> float:
         agv_point += int(evaluation.points)
     if agv_point == 0:
         return agv_point
-    print(agv_point / len(evaluations))
     return agv_point / len(evaluations)

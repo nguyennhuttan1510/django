@@ -2,7 +2,7 @@ from rest_access_policy import AccessPolicy
 from rest_access_policy.access_policy import AnonymousUser
 
 
-class RoomPolicy(AccessPolicy):
+class ServicePolicy(AccessPolicy):
     statements = [
         {
             "action": ["list", "retrieve", "search"],

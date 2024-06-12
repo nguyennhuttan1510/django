@@ -17,32 +17,32 @@ from evaluation.models import Evaluation
 from reservation.serializers import ReservationSerializer
 from .models import Service, evaluation_calc
 from .serializers import ServiceSerializer
-from .permission import RoomPolicy
+from .permission import ServicePolicy
 
 
 # Create your views here.
-class RoomViewSet(viewsets.ModelViewSet):
+class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
-    permission_classes = [RoomPolicy]
+    permission_classes = [ServicePolicy]
 
-    def get_queryset(self):
-        is_admin = self.request.user.is_superuser
-        print('is_admin', is_admin)
-        if is_admin:
-            return Service.objects.all()
-        else:
-            return Service.objects.filter(created_by=self.request.user)
+    # def get_queryset(self):
+    #     is_admin = self.request.user.is_superuser
+    #     print('is_admin', is_admin)
+    #     if is_admin:
+    #         return Service.objects.select_related('organization').all()
+    #     else:
+    #         return Service.objects.select_related('organization').filter(created_by=self.request.user)
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         if request.query_params:
-            services: List[Service] = queryset.filter(**request.query_params.dict())
+            services: List[Service] = queryset.select_related('organization').filter(**request.query_params.dict())
         else:
             services: List[Service] = queryset
 
-        for service in services:
-            service.evaluations = Evaluation.objects.select_related('service').filter(service=service.pk)
+        # for service in services:
+        #     service.evaluations = Evaluation.objects.select_related('service').filter(service=service.pk)
 
         if services:
             serializer = self.get_serializer(services, many=True)

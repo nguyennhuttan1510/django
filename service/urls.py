@@ -1,10 +1,7 @@
-from django.urls import path
 from rest_framework.routers import DefaultRouter
-from rest_framework.urlpatterns import format_suffix_patterns
 
-from service import views
-from service.views import RoomViewSet
+from service.views import ServiceViewSet
 
 router = DefaultRouter()
-router.register(r'services', RoomViewSet, basename='services')
+router.register(r'services', ServiceViewSet, basename='services')
 urlpatterns = router.urls

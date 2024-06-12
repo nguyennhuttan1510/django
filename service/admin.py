@@ -6,7 +6,7 @@ from service.models import Service
 # Register your models here.
 
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Service._meta.get_fields() if not field.many_to_many and field.name != 'evaluation' and field.name !='assetmodel']
+    list_display = ['id', 'name', 'description', 'capacity', 'price', 'organization', 'rate', 'created_by']
 
 
 admin.site.register(Service, ServiceAdmin)

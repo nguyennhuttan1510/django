@@ -58,7 +58,7 @@ class Evaluation(models.Model):
     description_unsatisfied = models.TextField(null=True, blank=True)
     points = models.IntegerField(default=0)
     # guest = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, blank=True, null=True, default=None, related_name='evaluations')
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
