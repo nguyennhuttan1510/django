@@ -1,12 +1,20 @@
 from django.contrib import admin
 
-from location.models import Location, Country, City, District, Ward
+from location.models import Location, Country, Province, District, Ward, AdministrativeRegion, AdministrativeUnit
 
 
 # Register your models here.
+class AdministrativeRegionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'name_en', 'code_name', 'code_name_en')
+
+
+class AdministrativeUnitAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'full_name_en', 'short_name', 'short_name_en', 'code_name', 'code_name_en')
+
+
 class LocationAdmin(admin.ModelAdmin):
-    list_display = (
-        'id', 'location_name', 'address', 'city', 'district', 'ward', 'latitude', 'longitude')
+    list_display = ('address', 'province', 'district', 'ward', 'latitude', 'longitude')
+    list_select_related = ['province', 'district', 'ward']
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -14,23 +22,26 @@ class CountryAdmin(admin.ModelAdmin):
         'id', 'country_name', 'code')
 
 
-class CityAdmin(admin.ModelAdmin):
+class ProvinceAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'city_name', 'code', 'postal_code')
+        'code', 'name', 'name_en', 'full_name', 'full_name_en', 'code_name', 'administrative_unit',
+        'administrative_region')
 
 
 class DistrictAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'district_name', 'code')
+        'code', 'name', 'name_en', 'full_name', 'full_name_en', 'code_name', 'province_code', 'administrative_unit')
 
 
 class WardAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'ward_name', 'code')
+        'code', 'name', 'name_en', 'full_name', 'full_name_en', 'code_name', 'district_code', 'administrative_unit')
 
 
+admin.site.register(AdministrativeRegion, AdministrativeRegionAdmin)
+admin.site.register(AdministrativeUnit, AdministrativeUnitAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Country, CountryAdmin)
-admin.site.register(City, CityAdmin)
+admin.site.register(Province, ProvinceAdmin)
 admin.site.register(District, DistrictAdmin)
 admin.site.register(Ward, WardAdmin)

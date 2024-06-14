@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from django.db.models import Min
+from django.db.models import Min, Avg
 from rest_framework import serializers
 from convenience.serializers import ConvenienceSerializer
 from evaluation.models import Evaluation, range_point, EVALUATION_FIELD
@@ -10,6 +10,12 @@ from service.serializers import ServiceSerializer, ServiceRepresentationSerializ
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = '__all__'
+
+
+class OrganizationSearchSerializer(serializers.ModelSerializer):
     services = ServiceSerializer(many=True)
     service_representation = serializers.SerializerMethodField()
     conveniences = ConvenienceSerializer(many=True)
@@ -18,7 +24,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organization
-        fields = ['id', 'name', 'avg_price', 'services', 'phone', 'rate', 'evaluation', 'conveniences', 'service_representation']
+        fields = ['id', 'name', 'avg_price', 'services', 'phone', 'rate', 'evaluation', 'conveniences',
+                  'service_representation']
 
     def get_evaluation(self, instance):
         evaluations_services = Evaluation.objects.filter(service__organization=instance.id, is_active=True)
@@ -30,7 +37,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
             del representation['is_active']
             return representation
 
-        evaluations = EvaluationSerializer(evaluations_services, many=True, context={'to_representation_template': evaluation_template})
+        evaluations = EvaluationSerializer(evaluations_services, many=True,
+                                           context={'to_representation_template': evaluation_template})
 
         return {
             'point': point,
@@ -40,7 +48,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
         }
 
     def get_avg_price(self, instance):
-        return format(instance.avg_price, '.2f')
+        avg_price = instance.services.aggregate(Avg('price'))['price__avg']
+        return format(avg_price, '.2f')
 
     def get_service_representation(self, instance):
         request = self.context.get('request')
