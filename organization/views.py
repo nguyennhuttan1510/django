@@ -4,12 +4,13 @@ import logging
 logger = logging.getLogger(__name__)
 
 from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q, Min, Avg
 
 from common.exceptions.model import ResponseBase
 from organization.models import Organization
-from organization.serializers import OrganizationSerializer
+from organization.serializers import OrganizationSerializer, OrganizationSearchSerializer
 
 
 # Create your views here.
@@ -25,36 +26,29 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     #     else:
     #         return Organization.objects.filter(created_by=self.request.user)
 
-    def list(self, request, *args, **kwargs):
+    @action(detail=False, methods=['get'])
+    def search(self, request, pk=None):
         # query by: capital, is_available_in_date, location
         end_date_default = datetime.datetime.now() + datetime.timedelta(days=2)
 
         capacity = request.query_params.get('capacity', 2)
-        location = request.query_params.get('location', None)
+        province_code = request.query_params.get('location', None)
         start_date = request.query_params.get('start_date', datetime.datetime.now())
         end_date = request.query_params.get('end_date', end_date_default)
 
-        # start_date = request.query_params.get('start_date', '2024-06-12')
-        # end_date = request.query_params.get('end_date', '2024-06-14')
         logger.info("Platform is running at risk")
         organization_filter = Organization.objects.filter(
             (
                     (Q(services__reservation__check_in__gte=end_date) | Q(
                         services__reservation__check_out__lte=start_date)) |
                     (Q(services__reservation__check_out__isnull=True) | Q(services__reservation__check_in__isnull=True))
-            ) & Q(services__capacity=capacity)
+            ) & Q(services__capacity=capacity) & Q(location__province__code=province_code)
         ).distinct()
-        organization_filter = organization_filter.annotate(avg_price=Avg('services__price'))
         organizations = organization_filter
 
-        if location is not None:
-            organizations = organization_filter.filter(location=location)
-        # if start_date is not None:
-        #     organizations = organizations_with_avg_price.filter(services__reservations__check_in__range=['2024-05-01', '2024-06-30'])
-        # if end_date is not None:
-        #     organizations = organizations_with_avg_price.filter(location=location)
-
-        print('organizations', organizations)
-        serializer = OrganizationSerializer(organizations, many=True, context={'request': request})
+        serializer = OrganizationSearchSerializer(organizations, many=True, context={'request': request})
         return Response(ResponseBase(data=serializer.data, message='get organization successfully').get(),
                         status=status.HTTP_200_OK)
+
+    # def list(self, request, *args, **kwargs):
+
