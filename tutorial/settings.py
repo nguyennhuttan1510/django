@@ -176,3 +176,35 @@ CRONJOBS = [
 ]
 
 ASGI_APPLICATION = "tutorial.asgi.application"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            # "formatter": "simple",
+        },
+    },
+    # "formatters": {
+    #     "verbose": {
+    #         "format": "{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}",
+    #         "style": "{",
+    #     },
+    #     "simple": {
+    #         "format": "{levelname} {message}",
+    #         "style": "{",
+    #     },
+    # },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "organization": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}

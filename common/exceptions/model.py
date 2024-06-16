@@ -10,8 +10,7 @@ class ResponseBase:
         result = lambda: None
         if self.message:
             result.message = self.message
-        if self.data:
-            result.data = self.data
+        result.data = self.data
         return result.__dict__
         # return {
         #     'message': self.message,

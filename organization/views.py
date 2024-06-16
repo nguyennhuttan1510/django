@@ -1,4 +1,7 @@
 import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 from rest_framework import status, viewsets
 from rest_framework.response import Response
@@ -33,18 +36,16 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
         # start_date = request.query_params.get('start_date', '2024-06-12')
         # end_date = request.query_params.get('end_date', '2024-06-14')
-
-
+        logger.info("Platform is running at risk")
         organization_filter = Organization.objects.filter(
             (
-                (Q(services__reservation__check_in__gte=end_date) | Q(services__reservation__check_out__lte=start_date)) |
-                (Q(services__reservation__check_out__isnull=True) | Q(services__reservation__check_in__isnull=True))
+                    (Q(services__reservation__check_in__gte=end_date) | Q(
+                        services__reservation__check_out__lte=start_date)) |
+                    (Q(services__reservation__check_out__isnull=True) | Q(services__reservation__check_in__isnull=True))
             ) & Q(services__capacity=capacity)
         ).distinct()
-        print('filter date', organization_filter)
         organization_filter = organization_filter.annotate(avg_price=Avg('services__price'))
         organizations = organization_filter
-        # organizations = organizations_with_avg_price.filter(services__capacity=capacity)
 
         if location is not None:
             organizations = organization_filter.filter(location=location)
