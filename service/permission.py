@@ -6,7 +6,7 @@ class ServicePolicy(AccessPolicy):
     statements = [
         {
             "action": ["list", "retrieve", "search"],
-            "principal": ["admin", "staff", "group:organization", "group:staff", "group:client"],
+            "principal": ['*'],
             "effect": "allow",
         },
         {

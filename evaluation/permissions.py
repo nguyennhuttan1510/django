@@ -33,7 +33,7 @@ class EvaluationPolicy(AccessPolicy):
             return True
         if request.data.get('pin_code') and request.data['reservation_id']:
             return True
-        return evaluation.reservation.guest.pk == request.user.pk
+        return evaluation.reservation.user.pk == request.user.pk
 
     def owner_of_reservation(self, request, view, action) -> bool:
         current_user = request.user
@@ -49,7 +49,7 @@ class EvaluationPolicy(AccessPolicy):
             }
         else:
             payload = {
-                'guest': current_user.pk,
+                'user': current_user.pk,
                 'pk': request.data['reservation'],
                 # 'status': StatusReservation.COMPLETED.name
             }

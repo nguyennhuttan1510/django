@@ -6,4 +6,4 @@ from convenience.models import Convenience
 class ConvenienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Convenience
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'type', 'code', 'priority']

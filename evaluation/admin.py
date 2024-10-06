@@ -6,7 +6,7 @@ from evaluation.models import Evaluation
 # Register your models here.
 class EvaluationAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'title', 'description_satisfied', 'description_unsatisfied', 'service', 'points', 'is_active',
+        'id', 'title', 'description_satisfied', 'description_unsatisfied', 'service', 'points', 'category', 'is_active',
         'created_at')
 
     def get_queryset(self, request):
@@ -18,7 +18,7 @@ class EvaluationAdmin(admin.ModelAdmin):
             return queryset
 
         # Filter the queryset based on the owner field
-        queryset = super().get_queryset(request).filter(guest=current_user.pk)
+        queryset = super().get_queryset(request).filter(user=current_user.pk)
 
         return queryset
 

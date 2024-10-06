@@ -42,7 +42,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
             queryset = Reservation.objects.all()
         else:
             queryset = Reservation.objects.filter(Q(organization__owner__username=self.request.user.username) | Q(
-                guest__username=self.request.user.username) | Q(approved_by__username=self.request.user.username))
+                user__username=self.request.user.username) | Q(approved_by__username=self.request.user.username))
 
         serializer = ReservationSerializer(queryset, many=True)
         return Response(ResponseBase(serializer.data, message=f'get reservations of {request.user}').get())
@@ -83,12 +83,12 @@ class ReservationViewSet(viewsets.ModelViewSet):
             pin_code = random.randint(1000, 9999)
 
             reservation = ReservationSerializer(
-                data={**request.data, 'guest': request.user.id, 'organization': rooms[0].organization.pk, 'approved_by': rooms[0].organization.owner.pk,
+                data={**request.data, 'user': request.user.id, 'organization': rooms[0].organization.pk, 'approved_by': rooms[0].organization.owner.pk,
                       'pin_code': pin_code}, many=False)
 
             # validate instance
             if reservation.is_valid():
-                reservation.save(balance_amount=reservation.calculate_price())
+                reservation.save(total_price=reservation.calculate_price())
 
                 # self._send_mail_confirm_reservation({'pin_code': pin_code, 'reservation_id': reservation.data['id']})
 

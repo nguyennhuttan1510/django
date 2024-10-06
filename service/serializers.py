@@ -2,10 +2,8 @@ from collections import OrderedDict
 
 from rest_framework import serializers
 
-from convenience.models import Convenience, TYPE_CONVENIENCE
 from convenience.serializers import ConvenienceSerializer
-from evaluation.models import EVALUATION_FIELD, range_point
-from evaluation.serializers import EvaluationSerializer
+from resource.serializers import ResourceSerializer, PrivateDocumentSerializer
 from service.models import Service, evaluation_calc
 
 
@@ -17,13 +15,13 @@ class ServiceSerializer(serializers.ModelSerializer):
     # evaluations = EvaluationSerializer(many=True, read_only=True)
     # evaluation = serializers.SerializerMethodField()
     promotions = serializers.SerializerMethodField()
+    resource = PrivateDocumentSerializer(many=True, read_only=True)
     promotional_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Service
-        fields = ['id', 'name', 'description', 'price', 'capacity', 'promotional_price', 'rate', 'promotions',
-                  'conveniences']
-        depth = 2
+        fields = ['id', 'name', 'type', 'status', 'description', 'price', 'capacity', 'promotional_price', 'rate', 'promotions',
+                  'conveniences', 'resource', 'location']
 
     # def get_evaluation(self, instance) -> dict:
     #     evaluations = instance.evaluations

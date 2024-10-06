@@ -6,10 +6,10 @@ from django.urls import path
 from django.contrib import admin
 from resource.views import ResourceViewSet
 
-# router = DefaultRouter()
-# router.register(r'resources', ResourceViewSet, basename='resource')
-# urlpatterns = router.urls
+router = DefaultRouter()
+router.register(r'resources', ResourceViewSet, basename='resource')
+urlpatterns = router.urls
 
-urlpatterns = [
-    path('resources/', ResourceViewSet.as_view(), name='file-upload'),
-]
+# urlpatterns = [
+#     path('resources/', ResourceViewSet.as_view(), name='file-upload'),
+# ]

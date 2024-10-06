@@ -35,7 +35,7 @@ class Country(models.Model):
 
 
 class Province(models.Model):
-    code = models.CharField(max_length=3)
+    code = models.CharField(primary_key=True, max_length=3)
     name = models.CharField(max_length=50)
     name_en = models.CharField(max_length=50, null=True)
     full_name = models.CharField(max_length=100)
@@ -45,11 +45,11 @@ class Province(models.Model):
     administrative_region = models.ForeignKey(AdministrativeRegion, on_delete=models.CASCADE, null=True, blank=True, default=None)
 
     def __str__(self):
-        return f'{self.code}.{self.code_name}'
+        return f'{self.name}'
 
 
 class District(models.Model):
-    code = models.CharField(max_length=3)
+    code = models.CharField(primary_key=True, max_length=3)
     name = models.CharField(max_length=50, default=None)
     name_en = models.CharField(max_length=50, null=True)
     full_name = models.CharField(max_length=100)
@@ -59,11 +59,11 @@ class District(models.Model):
     administrative_unit = models.ForeignKey(AdministrativeUnit, on_delete=models.CASCADE, null=True, blank=True, default=None)
 
     def __str__(self):
-        return f'{self.code}.{self.name}'
+        return f'{self.name}'
 
 
 class Ward(models.Model):
-    code = models.CharField(max_length=3)
+    code = models.CharField(primary_key=True, max_length=3)
     name = models.CharField(max_length=50, default=None)
     name_en = models.CharField(max_length=50, null=True)
     full_name = models.CharField(max_length=100)
@@ -73,7 +73,7 @@ class Ward(models.Model):
     administrative_unit = models.ForeignKey(AdministrativeUnit, on_delete=models.CASCADE, null=True, blank=True, default=None)
 
     def __str__(self):
-        return f'{self.code}.{self.name}'
+        return f'{self.name}'
 
 
 class Location(models.Model):

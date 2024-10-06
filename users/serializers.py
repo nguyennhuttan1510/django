@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from authentication.serializers import UserSerializer
 from organization.models import Organization
 from users.models import Profile
 

@@ -6,7 +6,7 @@ from convenience.models import Convenience
 # Register your models here.
 
 class ConvenienceAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Convenience._meta.get_fields() if not field.many_to_many]
+    list_display = ['name', 'description', 'code', 'is_active', 'type', 'priority', 'created_at']
 
 
 admin.site.register(Convenience, ConvenienceAdmin)

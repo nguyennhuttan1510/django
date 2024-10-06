@@ -1,5 +1,6 @@
 from rest_access_policy import AccessPolicy
-from rest_framework import permissions
+from rest_framework import permissions, exceptions
+from rest_framework.exceptions import NotFound
 
 from users.models import Profile
 
@@ -45,8 +46,13 @@ class AuthenticationPolicy(AccessPolicy):
     def is_creator(self, request, view, action) -> bool:
         req_user = request.user
         user = view.get_object()
-        profile = Profile.objects.get(owner=user.pk)
-        return profile.creator.pk == req_user.pk
+        try:
+            profile = Profile.objects.get(owner=user.pk)
+            return profile.creator.pk == req_user.pk
+        except Exception as e:
+            raise exceptions.APIException(str(e))
+            return False
+
 
 
     @classmethod

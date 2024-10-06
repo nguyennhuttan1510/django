@@ -23,6 +23,9 @@ from rest_framework_simplejwt import views as jwt_views
 from django.urls import path, include
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+from rest_framework_simplejwt.views import TokenVerifyView
+
+from services.token.view import CustomTokenObtainPairView, CustomTokenVerifyView
 
 
 # Serializers define the API representation.
@@ -48,8 +51,9 @@ urlpatterns = [
                   path('api-auth/', include('rest_framework.urls')),
                   path("", include("quickstart.urls"), name="quickstart"),
                   path("", include("resource.urls"), name="resource"),
-                  path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+                  path("token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
                   path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
+                  path('token/verify/', CustomTokenVerifyView.as_view(), name='token_verify'),
 
                   path("", include("users.urls"), name="users"),
                   path("", include("reservation.urls"), name="reservations"),
@@ -57,6 +61,7 @@ urlpatterns = [
                   path("", include("authentication.urls"), name="authentications"),
                   path("", include("organization.urls"), name="organizations"),
                   path("conveniences/", include("convenience.urls")),
-                  path("", include("asset.urls")),
+                  # path("", include("asset.urls")),
                   path("", include("evaluation.urls")),
+                  path("", include("metadata.urls")),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

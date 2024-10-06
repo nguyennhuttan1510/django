@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
+# import sentry_sdk
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +26,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-o199cv9k=gh-i6kujhl#3^@n_1_0vs)fh^&ntou%8e6xc66a&+'
+
+CLERK_API_KEY = 'pk_test_ZWxlY3RyaWMtdHVya2V5LTIwLmNsZXJrLmFjY291bnRzLmRldiQ'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'smart_selects',
+    'storages',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_access_policy',
@@ -65,7 +68,16 @@ INSTALLED_APPS = [
     'metadata'
 ]
 
+# CORS configuration
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Next.js default dev port
+]
+CORS_ALLOW_CREDENTIALS = True
+
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,7 +85,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'tutorial.urls'
@@ -152,7 +163,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.AllowAny'
     ],
 }
 
@@ -208,3 +219,40 @@ LOGGING = {
         },
     },
 }
+
+AWS_ACCESS_KEY_ID = 'AKIAXYKJRTWKEE7FUYMG'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'sunbooking'
+AWS_S3_REGION_NAME = 'ap-southeast-2'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+# AWS_LOCATION = 'source'
+#
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'source'),
+# ]
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#
+# AWS_STATIC_LOCATION = 'static'
+# STATICFILES_STORAGE = 'tutorial.storage_backends.StaticStorage'
+# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
+
+AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+DEFAULT_FILE_STORAGE = 'tutorial.storage_backends.PublicMediaStorage'
+
+AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
+PRIVATE_FILE_STORAGE = 'tutorial.storage_backends.PrivateMediaStorage'
+
+# sentry_sdk.init(
+#     dsn="https://938b4da546e066c216ac4d718b5d0020@o4507468908003328.ingest.us.sentry.io/4507468963053568",
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for performance monitoring.
+#     traces_sample_rate=1.0,
+#     # Set profiles_sample_rate to 1.0 to profile 100%
+#     # of sampled transactions.
+#     # We recommend adjusting this value in production.
+#     profiles_sample_rate=1.0,
+# )

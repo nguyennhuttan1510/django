@@ -1,0 +1,7 @@
+INSERT INTO service_service (id, name, description, capacity, price, rate, created_by_id, organization_id, status, type, location_id) VALUES (1, 'Tree_1', '', 2, 9, 2, 1, 3, 'active', null, null);
+INSERT INTO service_service (id, name, description, capacity, price, rate, created_by_id, organization_id, status, type, location_id) VALUES (2, 'Tree_2', '', 4, 12, 3, 2, 3, 'active', null, null);
+INSERT INTO service_service (id, name, description, capacity, price, rate, created_by_id, organization_id, status, type, location_id) VALUES (3, 'Phương Anh 001', '', 2, 6, 3.5, 2, 2, 'active', null, null);
+INSERT INTO service_service (id, name, description, capacity, price, rate, created_by_id, organization_id, status, type, location_id) VALUES (4, 'Phương Anh 002', '', 4, 15, 3.5, 2, 2, 'active', null, null);
+INSERT INTO service_service (id, name, description, capacity, price, rate, created_by_id, organization_id, status, type, location_id) VALUES (5, 'Savio_001', '', 2, 10, 4, 2, 1, 'active', null, null);
+INSERT INTO service_service (id, name, description, capacity, price, rate, created_by_id, organization_id, status, type, location_id) VALUES (6, 'Savio_002', '', 6, 14, 0, 2, 1, 'active', null, null);
+INSERT INTO service_service (id, name, description, capacity, price, rate, created_by_id, organization_id, status, type, location_id) VALUES (7, 'Tree_3', '', 2, 10, 2, 2, 3, 'active', null, null);

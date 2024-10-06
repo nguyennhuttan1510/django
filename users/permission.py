@@ -20,24 +20,24 @@ class AuthorOrReadOnly(permissions.BasePermission):
 
 class AccountAccessPolicy(AccessPolicy):
     statements = [
+        #Allow all users to read and create
         {
-            "action": ["list"],
-            "principal": ["admin", 'group:organization'],
+            "action": ["list", "create", "retrieve"],
+            "principal": ['*'],
             "effect": "allow",
         },
+        #Allow users is owner update
         {
-            "action": ["retrieve", "partial_update", "update", "create_user"],
-            "principal": ["admin", "group:organization", "group:staff"],
-            "effect": "allow"
+            "action": ["partial_update", "update"],
+            "principal": ["*"],
+            "effect": "allow",
+            "condition_expression": "is_author"
+
         },
-        {
-            "action": ["search"],
-            "principal": ["admin", "group:organization"],
-            "effect": "allow"
-        },
+        #Only owner is destroy
         {
             "action": ["destroy"],
-            "principal": ["admin", "group:organization", "group:staff"],
+            "principal": ["*"],
             "effect": "allow",
             "condition_expression": "is_author"
         },
@@ -46,6 +46,5 @@ class AccountAccessPolicy(AccessPolicy):
     def is_author(self, request, view, action) -> bool:
         account = view.get_object()
         user = request.user or AnonymousUser()
-        if user.is_superuser or user.is_staff:
-            return True
-        return user == account.created_by
+        print(f'{user == account.creator}, {user}, {account.creator}')
+        return user.id == account.owner_id
