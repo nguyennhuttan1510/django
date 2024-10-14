@@ -26,11 +26,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o199cv9k=gh-i6kujhl#3^@n_1_0vs)fh^&ntou%8e6xc66a&+'
-
-CLERK_API_KEY = 'pk_test_ZWxlY3RyaWMtdHVya2V5LTIwLmNsZXJrLmFjY291bnRzLmRldiQ'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -171,14 +166,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=180),
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST_USER = 'nguyentan15102000@gmail.com'
-EMAIL_HOST_PASSWORD = 'suxrtjfoyialbtkv'
-EMAIL_PORT = 587
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL = 'nguyentan15102000@gmail.com'
 
 
 CRONJOBS = [
@@ -219,14 +206,6 @@ LOGGING = {
     },
 }
 
-AWS_ACCESS_KEY_ID = 'AKIAXYKJRTWKEE7FUYMG'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'sunbooking'
-AWS_S3_REGION_NAME = 'ap-southeast-2'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
 # AWS_LOCATION = 'source'
 #
 # STATICFILES_DIRS = [
