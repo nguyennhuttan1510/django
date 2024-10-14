@@ -2,20 +2,16 @@ from enum import Enum
 
 from rest_framework import serializers
 
+from authentication.serializers import UserSerializer
 from reservation.models import Reservation
-from users.serializers import ProfileSerializer
+from service.serializers import ServiceSerializer, ServiceDTO
+from users.models import Profile
+from users.serializers import ProfileSerializer, ProfileDTO
 
-
-class StatusReservation(Enum):
-    ORDERED = 1,
-    COMPLETED = 2,
-    CLOSE = 3
-    CANCEL = 4,
-    PENDING = 5
 
 class ReservationSerializer(serializers.ModelSerializer):
     # guest = AccountSerializer(read_only=True)
-
+    # services = ServiceSerializer(read_only=True, many=True)
     class Meta:
         model = Reservation
         fields = '__all__'
@@ -72,3 +68,22 @@ class ReservationSerializer(serializers.ModelSerializer):
     #
     #     reservation_data.status = kwargs['status']
     #     reservation_data.save()
+
+
+class ReservationDTO(ReservationSerializer):
+    check_in = serializers.DateTimeField(required=True)
+    check_out = serializers.DateTimeField(required=True)
+    services = ServiceDTO(read_only=True, many=True, required=False)
+    user = serializers.SerializerMethodField(required=False)
+
+    class Meta(ReservationSerializer.Meta):
+        fields = ['id', 'check_in', 'check_out', 'status', 'created_at', 'user', 'services']
+
+    def get_user(self, instance):
+        profile = Profile.objects.get(owner=instance.user)
+        return ProfileDTO(profile).data
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['count_day'] = Reservation.objects.get(pk=instance.pk).count_days()
+        return rep

@@ -1,19 +1,21 @@
 from django.db.models import Min, Avg, Q
 from rest_framework import serializers
 from convenience.serializers import ConvenienceSerializer
-from evaluation.models import Evaluation, range_point, EVALUATION_FIELD, get_evaluation_group_by_category
+from evaluation.models import Evaluation, get_evaluation_group_by_category
+from evaluation.serializers import get_rank_code
 from location.serializers import LocationSerializer
+from metadata.models import Metadata
 from organization.models import Organization
 from resource.serializers import PrivateDocumentSerializer
 from service.models import evaluation_calc, query_service, service_min_price
-from service.serializers import ServiceSerializer, ServiceRepresentationSerializers
+from service.serializers import ServiceSerializer, ServiceDTO
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
     services = ServiceSerializer(many=True, read_only=True)
     location = LocationSerializer(read_only=True)
-    evaluation = serializers.SerializerMethodField()
     conveniences = ConvenienceSerializer(many=True, read_only=True)
+    evaluation = serializers.SerializerMethodField()
     resource = serializers.SerializerMethodField()
 
     class Meta:
@@ -40,19 +42,20 @@ class OrganizationSearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organization
-        fields = ['id', 'name', 'avg_price', 'location', 'phone', 'rate', 'evaluation', 'conveniences',
+        fields = ['id', 'name', 'avg_price', 'location', 'phone_number', 'rate', 'evaluation', 'conveniences',
                   'service_representation', 'resource']
 
     def get_evaluation(self, instance):
         evaluations_services = Evaluation.objects.filter(service__organization=instance.id, is_active=True)
-        point = round(evaluation_calc(evaluations_services), 2)
-
+        point = round(evaluation_calc(evaluations_services), 1)
         evaluation_overview = get_evaluation_group_by_category(instance.id)
+        metadata = Metadata.objects.filter(type='RANK_POINT')
+        rank_name = metadata.get(code=get_rank_code(point)).name or None
+
         return {
             'point': point,
             'count': len(evaluations_services),
-            EVALUATION_FIELD.TYPE.value: range_point(point)[EVALUATION_FIELD.TYPE.value],
-            # 'evaluations': evaluations.data,
+            'rank_name': rank_name,
             'evaluation_overview': evaluation_overview
         }
 
@@ -72,7 +75,7 @@ class OrganizationSearchSerializer(serializers.ModelSerializer):
 
         services = query_service(organization_id=organization_id, start_date=start_date, end_date=end_date, capacity=capacity)
         service = service_min_price(services)
-        return ServiceRepresentationSerializers(service).data
+        return ServiceDTO(service).data
 
     def get_resource(self, instance):
         services = instance.services.all()
@@ -83,3 +86,10 @@ class OrganizationSearchSerializer(serializers.ModelSerializer):
             resources.extend(resource)
         unique_resources = list(set(resources))
         return PrivateDocumentSerializer(unique_resources, many=True).data
+
+
+class OrganizationSearchParamsSerializer(serializers.Serializer):
+    start_date = serializers.DateField()
+    end_date = serializers.DateField()
+    capacity = serializers.CharField()
+    province_code = serializers.CharField()

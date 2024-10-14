@@ -29,7 +29,7 @@ class ReservationPolicy(AccessPolicy):
         },
         {
             "action": ["create"],
-            "principal": ["admin", "staff", "group:client"],
+            "principal": ["*"],
             "effect": "allow",
         },
     ]

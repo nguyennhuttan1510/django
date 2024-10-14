@@ -1,6 +1,7 @@
 from django.urls import path
 from rest_framework import routers
 
+from organization import views
 from organization.views import OrganizationViewSet
 
 router = routers.DefaultRouter()

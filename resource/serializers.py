@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from resource.models import Resource, PrivateDocument
+from resource.models import Resource, PrivateDocument, PublicDocument
 
 
 class ResourceSerializer(serializers.ModelSerializer):
@@ -13,6 +13,17 @@ class ResourceSerializer(serializers.ModelSerializer):
 class PrivateDocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateDocument
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['file'] = rep.pop('upload')
+        return rep
+
+
+class PublicDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PublicDocument
         fields = '__all__'
 
     def to_representation(self, instance):

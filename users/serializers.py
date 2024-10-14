@@ -7,8 +7,11 @@ from users.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    # organization = serializers.PrimaryKeyRelatedField(queryset=Organization)
-
     class Meta:
         model = Profile
         fields = '__all__'
+
+
+class ProfileDTO(ProfileSerializer):
+    class Meta(ProfileSerializer.Meta):
+        fields = ['id', 'first_name', 'last_name', 'middle_name', 'display_name', 'email']

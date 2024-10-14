@@ -20,7 +20,7 @@ class AuthenticationPolicy(AccessPolicy):
         },
         {
             'action': ['create'],
-            'principal': ['admin', 'staff', 'group:organization', 'group:staff', 'group:client', 'anonymous'],
+            'principal': ['*'],
             'effect': 'allow',
         },
         # {

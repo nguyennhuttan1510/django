@@ -21,3 +21,6 @@ class PrivateDocument(models.Model):
 class PublicDocument(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     upload = models.FileField(storage=PublicMediaStorage())
+
+    def __str__(self):
+        return f'{self.pk}'

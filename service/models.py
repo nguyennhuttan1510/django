@@ -11,19 +11,14 @@ from organization.models import Organization
 from promotion.models import Promotion
 from resource.models import Resource, PrivateDocument
 
-
 # Create your models here.
 
-TYPE_ACCOMMODATION = [
-    ("APARTMENT", "Apartment"),
-    ("VILLA", "Villa"),
-    ("HOSTEL", "Hostel"),
-    ("LODGE", "Lodge"),
-    ("STUDIO", "Studio"),
-    ("VACATION_HOME", "Vacation Home"),
-    ("BUNGALOW", "Bungalow"),
-    ("CHALET", "Chalet"),
+TYPE_ROOM = [
+    ("SINGLE", "Single"),
+    ("DOUBLE", "Double"),
+    ("SUITE", "Suite"),
 ]
+
 
 class Service(models.Model):
     name = models.CharField(max_length=100)
@@ -31,11 +26,10 @@ class Service(models.Model):
     description = models.TextField(max_length=300, null=True, blank=True)
     capacity = models.IntegerField()
     price = models.DecimalField(max_digits=20, decimal_places=2)
-    type = models.CharField( choices=TYPE_ACCOMMODATION, max_length=20, null=True, blank=True)
+    type = models.CharField(choices=TYPE_ROOM, max_length=20, null=True, blank=True)
     status = models.CharField(choices=[('active', 'Active'), ('inactive', 'Inactive')], default='active', max_length=30)
     conveniences = models.ManyToManyField(Convenience, null=True, blank=True, through='ServicesAssets')
     rate = models.FloatField(default=0, null=True, blank=True)
-    location = models.ForeignKey(Location, null=True, blank=True, related_name='services', on_delete=models.CASCADE, default=None)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE,
                                      default=None, null=True, related_name='services')
     promotions = models.ManyToManyField(Promotion, blank=True, null=True)

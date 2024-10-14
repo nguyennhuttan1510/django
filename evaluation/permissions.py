@@ -2,7 +2,6 @@ from django.contrib.auth.models import AnonymousUser
 from rest_access_policy.access_policy import AccessPolicy
 
 from reservation.models import Reservation
-from reservation.serializers import StatusReservation
 
 
 class EvaluationPolicy(AccessPolicy):

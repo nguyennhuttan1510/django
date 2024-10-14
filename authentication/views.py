@@ -20,16 +20,16 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthenticationPolicy]
 
     def create(self, request, *args, **kwargs):
-        username= request.data['username']
-        password= request.data['password']
+        username = request.data['username']
+        password = request.data['password']
 
         # check username is unique
-        has_user = User.objects.filter(username).exists()
+        has_user = User.objects.filter(email=username).exists()
         if has_user:
             return Response(ResponseBase(message='User already exists.').get(), status=status.HTTP_400_BAD_REQUEST)
 
         # create user
-        new_user = User.objects.create_user(username, password)
+        new_user = User.objects.create_user(username=username, password=password, email=username)
         if new_user is not None:
             '''
             assign user to group lower level than creator.
@@ -37,9 +37,10 @@ class UserViewSet(viewsets.ModelViewSet):
             
             create profile for new user.
             '''
-            new_user = self._assign_group_to(request, new_user)
+            # new_user = self._assign_group_to(request, new_user)
 
-            profile_new_user = ProfileSerializer(data={"owner": new_user.pk, 'creator': request.user.pk, 'email': username})
+            profile_new_user = ProfileSerializer(
+                data={"owner": new_user.pk, 'creator': request.user.pk, 'email': username})
             profile_new_user.is_valid(raise_exception=True)
             profile_new_user.save()
 
